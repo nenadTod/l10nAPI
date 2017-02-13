@@ -18,14 +18,14 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(allowCrossDomain);
-
+var db_conn = "mongodb://localhost:27017/l10nDB";
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || db_conn, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
